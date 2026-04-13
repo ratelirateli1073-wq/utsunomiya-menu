@@ -1,11 +1,3 @@
-# utsunomiya-menu
-宇都宮大学生協　陽東食堂　メニュー表
-
-//
-//
-// メニュ表示ページ
-//
-//
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -35,66 +27,6 @@
 </html>
 
 
-//
-//
-// 管理画面
-//
-//
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>管理画面 - メニュー編集</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <header>
-        <h1>🔐 管理画面 - メニュー編集</h1>
-    </header>
-
-    <main>
-        <!-- パスワード入力 -->
-        <div id="loginSection" class="login-section">
-            <h2>パスワード入力</h2>
-            <input type="password" id="passwordInput" placeholder="パスワードを入力してください">
-            <button onclick="login()">ログイン</button>
-            <p id="loginError" class="error-message"></p>
-        </div>
-
-        <!-- 管理画面（ログイン後に表示） -->
-        <div id="adminSection" class="admin-section" style="display: none;">
-            <h2>メニュー追加</h2>
-            <form id="addMenuForm">
-                <input type="text" id="menuName" placeholder="料理の名前" required>
-                <input type="number" id="menuPrice" placeholder="値段（円）" required>
-                <input type="text" id="menuImage" placeholder="画像URL（例：https://example.com/image.jpg）" required>
-                <button type="submit">追加</button>
-            </form>
-
-            <h2>現在のメニュー</h2>
-            <div id="menuList" class="menu-list">
-                <!-- メニュー一覧がここに表示されます -->
-            </div>
-
-            <button onclick="logout()" class="logout-btn">ログアウト</button>
-        </div>
-    </main>
-
-    <footer>
-        <p>&copy; 2026 宇都宮大学生協 陽東食堂</p>
-    </footer>
-
-    <script src="admin.js"></script>
-</body>
-</html>
-
-
-//
-//
-// デザインCSS
-//
-//
 * {
     margin: 0;
     padding: 0;
@@ -139,7 +71,6 @@ footer {
     margin-top: 50px;
 }
 
-/* メニュー表示ページ */
 .menu-container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -181,7 +112,6 @@ footer {
     font-weight: bold;
 }
 
-/* 管理画面 */
 .login-section {
     background: white;
     padding: 30px;
@@ -332,7 +262,6 @@ footer {
     background-color: #777;
 }
 
-/* レスポンシブ */
 @media (max-width: 768px) {
     #addMenuForm {
         grid-template-columns: 1fr;
@@ -344,12 +273,7 @@ footer {
 }
 
 
-//
-//
-// メニュー表示機能
-//
-//
-// ページ読み込み時にメニューを表示
+
 document.addEventListener('DOMContentLoaded', loadMenu);
 
 async function loadMenu() {
@@ -387,19 +311,60 @@ function displayMenu(menuItems) {
 }
 
 
-//
-//
-// 管理画面機能
-//
-//
-const ADMIN_PASSWORD = 'admin123'; // パスワード設定
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>管理画面 - メニュー編集</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>🔐 管理画面 - メニュー編集</h1>
+    </header>
+
+    <main>
+        <div id="loginSection" class="login-section">
+            <h2>パスワード入力</h2>
+            <input type="password" id="passwordInput" placeholder="パスワードを入力してください">
+            <button onclick="login()">ログイン</button>
+            <p id="loginError" class="error-message"></p>
+        </div>
+
+        <div id="adminSection" class="admin-section" style="display: none;">
+            <h2>メニュー追加</h2>
+            <form id="addMenuForm">
+                <input type="text" id="menuName" placeholder="料理の名前" required>
+                <input type="number" id="menuPrice" placeholder="値段（円）" required>
+                <input type="text" id="menuImage" placeholder="画像URL（例：https://example.com/image.jpg）" required>
+                <button type="submit">追加</button>
+            </form>
+
+            <h2>現在のメニュー</h2>
+            <div id="menuList" class="menu-list">
+            </div>
+
+            <button onclick="logout()" class="logout-btn">ログアウト</button>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 宇都宮大学生協 陽東食堂</p>
+    </footer>
+
+    <script src="admin.js"></script>
+</body>
+</html>
+
+
+const ADMIN_PASSWORD = 'admin123';
 
 let menuData = [];
 
-// ページ読み込み時
 document.addEventListener('DOMContentLoaded', loadMenuData);
 
-// パスワードチェック
 function login() {
     const password = document.getElementById('passwordInput').value;
     
@@ -413,7 +378,6 @@ function login() {
     }
 }
 
-// ログアウト
 function logout() {
     document.getElementById('loginSection').style.display = 'block';
     document.getElementById('adminSection').style.display = 'none';
@@ -421,7 +385,6 @@ function logout() {
     document.getElementById('loginError').textContent = '';
 }
 
-// メニューデータを読み込む
 async function loadMenuData() {
     try {
         const response = await fetch('menu-data.json');
@@ -433,7 +396,6 @@ async function loadMenuData() {
     }
 }
 
-// 管理画面にメニューを表示
 function displayAdminMenu() {
     const listContainer = document.getElementById('menuList');
     listContainer.innerHTML = '';
@@ -456,8 +418,7 @@ function displayAdminMenu() {
     });
 }
 
-// メニュー追加
-document.getElementById('addMenuForm').addEventListener('submit', function(e) {
+document.getElementById('addMenuForm')?.addEventListener('submit', function(e) {
     e.preventDefault();
 
     const name = document.getElementById('menuName').value;
@@ -471,19 +432,15 @@ document.getElementById('addMenuForm').addEventListener('submit', function(e) {
             image: image
         });
 
-        // ローカルストレージに保存（ブラウザの保存機能）
         localStorage.setItem('menuData', JSON.stringify(menuData));
 
-        // フォームをリセット
         document.getElementById('addMenuForm').reset();
 
-        // メニューを再表示
         displayAdminMenu();
         alert('✅ メニューが追加されました！');
     }
 });
 
-// メニュー削除
 function deleteMenu(index) {
     if (confirm('このメニューを削除してもよろしいですか？')) {
         menuData.splice(index, 1);
@@ -493,7 +450,6 @@ function deleteMenu(index) {
     }
 }
 
-// ページ読み込み時にローカルストレージからデータを復元
 window.addEventListener('load', function() {
     const savedData = localStorage.getItem('menuData');
     if (savedData) {
@@ -501,11 +457,6 @@ window.addEventListener('load', function() {
     }
 });
 
-//
-//
-// メニューデータ
-//
-//
 
 {
   "menu": [
@@ -541,3 +492,5 @@ window.addEventListener('load', function() {
     {"name": "唐揚げ＆フライセット", "price": 1000, "image": "https://via.placeholder.com/300x200?text=セット"}
   ]
 }
+
+
